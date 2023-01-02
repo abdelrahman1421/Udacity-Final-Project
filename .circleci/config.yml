@@ -1,6 +1,16 @@
 version: 2.1
 
-# commands:
+# Configure Slack Notifications
+orbs:    
+  slack: circleci/slack@4.12.0 
+
+commands:
+  notify_on_failure:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: uda-final-project 
+          template: basic_fail_1
   # destroy-environment:
   #   description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
   #   parameters:
@@ -31,7 +41,8 @@ version: 2.1
   #           #  Add revert code here. You can find this in the Getting Started section.
   #             exit 1
   #           fi
-            
+
+           
 jobs:
 
 # Build Frontend
@@ -53,6 +64,8 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
 
+      - notify_on_failure
+
 # Build Backend
 
   build-backend:
@@ -72,6 +85,8 @@ jobs:
           paths: [backend/node_modules]
           key: backend-build
 
+      - notify_on_failure
+
 # Test Frontend
 
   test-frontend:
@@ -88,6 +103,8 @@ jobs:
             npm install
             npm run test
 
+      - notify_on_failure
+
 # Test Backend
 
   test-backend:
@@ -103,6 +120,8 @@ jobs:
             cd backend
             npm install
             npm run test
+
+      - notify_on_failure
 
 # Scan Frontend
             
@@ -123,6 +142,8 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
+      - notify_on_failure
+
 
 # Scan Backend
 
@@ -141,6 +162,8 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
+
+      - notify_on_failure
 
 #   deploy-infrastructure:
 #     docker:
@@ -307,6 +330,14 @@ jobs:
 #               # your code here
 #             fi
             
+  notify_on_success:
+    docker: 
+      - image: cimg/base:stable
+    steps:
+      - slack/notify:
+          event: pass
+          channel: uda-final-project 
+          template: success_taged_deployment
 
 workflows:
   default:
@@ -321,6 +352,8 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
+      notify_on_success:
+          requires: [build-frontend,build-backend,test-frontend,test-backend,scan-backend,scan-frontend]
       # - deploy-infrastructure:
       #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
       #     filters:
