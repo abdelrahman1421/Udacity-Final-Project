@@ -102,9 +102,7 @@ jobs:
           command: |
             cd backend
             npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
-            npm audit --audit-level=critical
+            npm run test
 
 # Scan Frontend
             
@@ -125,6 +123,7 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
+
 # Scan Backend
 
   scan-backend:
@@ -139,6 +138,8 @@ jobs:
           command: |
             cd backend
             npm install
+            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
 #   deploy-infrastructure:
