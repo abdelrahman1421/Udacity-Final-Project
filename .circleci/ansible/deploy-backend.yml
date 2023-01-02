@@ -12,7 +12,7 @@
     - ansible_stdout_callback: yaml
 
   pre_tasks:
-    - name: Wait 300 seconds, but only start checking after 60 seconds
+    - name: Wait 300 seconds
       ansible.builtin.wait_for_connection:
       timeout: 300
 
