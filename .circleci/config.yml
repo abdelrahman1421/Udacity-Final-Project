@@ -371,12 +371,11 @@ jobs:
             ls -la ..
             echo "----------------------------------------"
             pwd
-            echo "----------------------------------------"
-            ls -la
+            cd ..
             echo "----------------------------------------"
             ls -la ../.circleci/ansible/roles/deploy/files/
             echo "----------------------------------------"
-            cp artifact.tar.gz ../.circleci/ansible/roles/deploy/files/
+            cp backend/artifact.tar.gz ../.circleci/ansible/roles/deploy/files/
             
       - run:
           name: Deploy backend
