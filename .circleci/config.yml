@@ -373,7 +373,8 @@ jobs:
             pwd
             cd ..
             echo "----------------------------------------"
-            cp backend/artifact.tar.gz ../.circleci/ansible/roles/deploy/files/
+            pwd
+            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files/
             
       - run:
           name: Deploy backend
