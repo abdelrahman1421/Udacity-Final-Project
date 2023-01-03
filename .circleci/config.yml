@@ -388,10 +388,9 @@ jobs:
             cd backend
             npm run build
             tar -czf artifact.tar.gz dist/* package*
-            aws s3 cp artifact.tar.gz s3://udapeople-udapeople14/artifact.tar.gz
             cd .. 
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
-            ls .circleci/ansible/roles/deploy/files
+            aws s3 cp ../.circleci/ansible/roles/deploy/files/artifact.tar.gz s3://udapeople-udapeople14/artifact.tar.gz
       - run:
           name: Deploy backend
           command: |
