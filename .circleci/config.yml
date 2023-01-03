@@ -92,28 +92,8 @@ commands:
             then
               cd ~/project/backend
               npm install
-              npm run migration:revert
+              npm run migrations:revert
             fi             
-
-  # revert-migrations:
-  #   description: Revert the last migration if successfully run in the current workflow.
-  #   parameters:
-  #     # Add parameter here     
-  #   steps:
-  #     - run:
-  #         name: Revert migrations
-  #         # Add when this will run
-  #         command: |
-  #           # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-  #           SUCCESS = 1
-  #           if(( $SUCCESS==1 )); 
-  #           then
-  #           #  cd ~/project/backend
-  #           #  npm install
-  #           #  Add revert code here. You can find this in the Getting Started section.
-  #             exit 1
-  #           fi
-
 
 jobs:
 
@@ -385,14 +365,15 @@ jobs:
       - run:
           name: Package Backend
           command: |
-            ls -l
+            ls -al
             pwd
             cd backend
             npm run build
             tar -czf artifact.tar.gz dist/* package*
+            pwd
             cd ..
-            aws s3 cp artifact.tar.gz s3://udapeople-udapeople14/artifact.tar.gz
-            cp artifact.tar.gz .circleci/ansible/roles/deploy/files
+            cp backend/artifact.tar.gz /home/circleci/project/.circleci/ansible/roles/deploy/files/artifact.tar.gz
+            ls -l /home/circleci/project/.circleci/ansible/roles/deploy/files/
       - run:
           name: Deploy backend
           command: |
