@@ -16,7 +16,7 @@
 
 - name: "Executing Node app with PM2"
   args:
-    chdir: /home/ubuntu/backend-artifact/dist
+    chdir: ~/backend-artifact/dist
   environment:
     ENVIRONMENT: production
     TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
