@@ -87,7 +87,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure http://kvdb.io/${KVDB_BUCKET}/migration_31f2354
+            SUCCESS=$(curl  https://kvdb.io/CusX24G8HoL6W7GLMHZFqu/migration_31f2354)
             if(( $SUCCESS == 1 )); 
             then
               cd ~/project/backend
@@ -385,11 +385,14 @@ jobs:
       - run:
           name: Package Backend
           command: |
+            ls -l
+            pwd
             cd backend
             npm run build
             tar -czf artifact.tar.gz dist/* package*
+            cd ..
             aws s3 cp artifact.tar.gz s3://udapeople-udapeople14/artifact.tar.gz
-            cp artifact.tar.gz ../.circleci/ansible/roles/deploy/files
+            cp artifact.tar.gz .circleci/ansible/roles/deploy/files
       - run:
           name: Deploy backend
           command: |
