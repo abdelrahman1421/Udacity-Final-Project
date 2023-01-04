@@ -519,3 +519,4 @@ workflows:
       # - cleanup:
       #     requires: [cloudfront-update]
 
+# VS Code Extension Version: 1.5.1
