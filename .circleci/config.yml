@@ -258,7 +258,9 @@ jobs:
             - project/.circleci/ansible/inventory.txt
 
       - destroy-environment
-      # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure 
+
+# Configure Infrastructure
 
   configure-infrastructure:
     docker:
@@ -277,7 +279,9 @@ jobs:
               ansible-playbook -i inventory.txt configure-server.yml
 
       - destroy-environment
-      # Here's where you will add some code to rollback on failure      
+      # Here's where you will add some code to rollback on failure   
+
+# Run Migrations
 
   run-migrations:
     docker:
@@ -385,7 +389,9 @@ jobs:
       - destroy-environment
       - revert-migrations
       # Here's where you will add some code to rollback on failure      
-      
+
+# Smoke Test
+
   smoke-test:
     docker:
       - image: cimg/base:stable
@@ -421,7 +427,9 @@ jobs:
             fi 
       - destroy-environment 
       - revert-migrations
-      # Here's where you will add some code to rollback on failure  
+      # Here's where you will add some code to rollback on failure 
+
+# CloudFront Update
 
   cloudfront-update:
     docker:
@@ -451,6 +459,8 @@ jobs:
       
        # Here's where you will add some code to rollback on failure  
 
+# CleanUp
+
   cleanup:
       docker:
         - image: cimg/base:stable
@@ -473,7 +483,9 @@ jobs:
                 aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
               fi
-            
+
+# WorkFlows
+
 workflows:
   default:
     jobs:
